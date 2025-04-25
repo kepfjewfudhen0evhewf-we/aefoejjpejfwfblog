@@ -3,7 +3,7 @@ layout: default
 ---
 <div class="terminal">
   <header class="console-header">
-    <h1 data-text="MONOCHROME_MUSINGS">MONOCHROME_MUSINGS</h1>
+    <h1 data-text="Newgens.lol_Blog">Newgens.lol Blog</h1>
     <p class="prompt">Zre@Blog:~$ <span class="cursor">█</span></p>
   </header>
 
@@ -203,6 +203,8 @@ function typeWriter() {
     title.textContent = text.substring(0, index+1).replace('_', ' ');
     index++;
     setTimeout(typeWriter, Math.random() * 200 + 50);
+  } else {
+    title.textContent = "Newgens.lol Blog"; // Ensure final text is correct
   }
 }
 
