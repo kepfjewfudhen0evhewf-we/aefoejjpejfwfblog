@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site.title | escape }} - {{ page.title | escape }}</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        
+        header {
+            border-bottom: 2px solid #000;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #000;
+            margin-bottom: 0;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            color: #666;
+        }
+        
+        nav {
+            margin: 20px 0;
+        }
+        
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .post-list li {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .post-meta {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        footer {
+            border-top: 1px solid #000;
+            margin-top: 50px;
+            padding-top: 20px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .sort-options {
+            margin: 20px 0;
+        }
+        
+        .sort-options button {
+            background: none;
+            border: 1px solid #000;
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .sort-options button:hover {
+            background: #f0f0f0;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    {{ content }}
+    
+    <footer>
+        <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>
