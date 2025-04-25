@@ -1,10 +1,9 @@
 # Site Configuration
 title: "Newgens.lol Blog"
-description: "THOUGHTS IN NEGATIVE SPACE"
-url: "https://yourusername.github.io"
-baseurl: ""
+description: "Cybersec FR"
+baseurl: "newgens.lol"
 
-# Design Settings
+
 theme: minima
 google_fonts: "Pixelify+Sans:wght@400..700"
 color_scheme: dark
@@ -12,14 +11,14 @@ background: "#000000"
 text_color: "#ffffff"
 accent_color: "#cccccc"
 
-# Content Settings
+
 collections:
   posts:
-    output: false  # We'll handle display on index
+    output: false 
 permalink: pretty
 excerpt_separator: "<!--more-->"
 
-# Technical Settings
+
 plugins:
   - jekyll-feed
 markdown: kramdown
