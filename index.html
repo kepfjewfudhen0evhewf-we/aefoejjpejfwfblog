@@ -1,0 +1,55 @@
+---
+layout: default
+---
+<div class="home">
+  <header class="page-heading">
+    <h1>{{ site.title | escape }}</h1>
+    <p class="subtitle">{{ site.description | escape }}</p>
+  </header>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/archive">Archive</a>
+  </nav>
+
+  <div class="sort-options">
+    <span>Sort by:</span>
+    <button onclick="sortPosts('date-desc')">Newest First</button>
+    <button onclick="sortPosts('date-asc')">Oldest First</button>
+    <button onclick="sortPosts('title')">Title</button>
+  </div>
+
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <h2>
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h2>
+        <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+function sortPosts(method) {
+  const container = document.querySelector('.post-list');
+  const posts = Array.from(container.children);
+  
+  posts.sort((a, b) => {
+    const aDate = new Date(a.querySelector('.post-meta').textContent);
+    const bDate = new Date(b.querySelector('.post-meta').textContent);
+    const aTitle = a.querySelector('h2').textContent.toLowerCase();
+    const bTitle = b.querySelector('h2').textContent.toLowerCase();
+    
+    if (method === 'date-desc') return bDate - aDate;
+    if (method === 'date-asc') return aDate - bDate;
+    if (method === 'title') return aTitle.localeCompare(bTitle);
+    return 0;
+  });
+  
+  posts.forEach(post => container.appendChild(post));
+}
+</script>
