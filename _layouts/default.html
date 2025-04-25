@@ -1,89 +1,273 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ site.title | escape }} - {{ page.title | escape }}</title>
+    <title>{{ site.title | escape }} | {{ page.title | escape }}</title>
+    <link href="https://fonts.googleapis.com/css2?family={{ site.google_fonts }}&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray: #e0e0e0;
+            --dark-gray: #333333;
+        }
+        
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Pixelify Sans', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
             line-height: 1.6;
-            color: #333;
-            max-width: 800px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .home {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #fff;
         }
         
-        header {
-            border-bottom: 2px solid #000;
+        .hero {
+            position: relative;
+            padding: 40px 0;
             margin-bottom: 30px;
-            padding-bottom: 10px;
+            border-bottom: 4px dashed var(--black);
         }
         
-        h1 {
-            font-size: 2.5em;
-            color: #000;
-            margin-bottom: 0;
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 2px;
+            opacity: 0.3;
+        }
+        
+        .pixel {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: var(--black);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        
+        .pixel[v-if] {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+        
+        h1.pixel-text {
+            font-size: 4rem;
+            margin: 0;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1.pixel-text::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--black);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: underline 2s infinite alternate;
         }
         
         .subtitle {
-            font-style: italic;
-            color: #666;
+            font-size: 1.5rem;
+            margin-top: 10px;
+            color: var(--dark-gray);
         }
         
-        nav {
-            margin: 20px 0;
+        .pixel-nav {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 10px 0;
+            border-top: 2px solid var(--black);
+            border-bottom: 2px solid var(--black);
         }
         
-        nav a {
-            margin-right: 15px;
+        .nav-link {
+            color: var(--black);
             text-decoration: none;
-            color: #000;
-            font-weight: bold;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
         }
         
-        .post-list li {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .post-meta {
-            color: #666;
-            font-size: 0.9em;
-        }
-        
-        footer {
-            border-top: 1px solid #000;
-            margin-top: 50px;
-            padding-top: 20px;
-            text-align: center;
-            color: #666;
+        .nav-link:hover {
+            transform: translateY(-2px);
         }
         
         .sort-options {
-            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
         }
         
-        .sort-options button {
-            background: none;
-            border: 1px solid #000;
-            padding: 5px 10px;
-            margin: 0 5px;
+        .sort-label {
+            font-size: 1.2rem;
+        }
+        
+        .pixel-button {
+            background: var(--white);
+            border: 3px solid var(--black);
+            padding: 8px 15px;
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 1rem;
             cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
         }
         
-        .sort-options button:hover {
-            background: #f0f0f0;
+        .pixel-button:hover {
+            background: var(--black);
+            color: var(--white);
         }
         
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
+        .pixel-button:active {
+            transform: translate(3px, 3px);
+        }
+        
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .post-card {
+            text-decoration: none;
+            color: var(--black);
+            height: 200px;
+            perspective: 1000px;
+        }
+        
+        .post-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border: 3px solid var(--black);
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.2);
+        }
+        
+        .post-card:hover .post-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .post-card-front, .post-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .post-card-front {
+            background-color: var(--white);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .post-card-back {
+            background-color: var(--black);
+            color: var(--white);
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .post-title {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .post-date {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+        
+        .post-excerpt {
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        
+        .read-more {
+            font-size: 1.5rem;
+            animation: pulse 1.5s infinite;
+        }
+        
+        footer {
+            margin-top: 80px;
+            padding: 20px 0;
+            border-top: 2px solid var(--black);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes underline {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .shuffling .post-card-inner {
+            animation: shake 0.5s;
+        }
+        
+        .appear {
+            animation: appear 0.3s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            h1.pixel-text {
+                font-size: 2.5rem;
             }
             
-            h1 {
-                font-size: 2em;
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-decoration {
+                display: none;
             }
         }
     </style>
@@ -92,7 +276,7 @@
     {{ content }}
     
     <footer>
-        <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}. All rights reserved.</p>
+        <p>© {{ site.time | date: '%Y' }} {{ site.author.name }}. All rights reserved.</p>
     </footer>
 </body>
 </html>
