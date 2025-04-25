@@ -1,105 +1,179 @@
 ---
 layout: default
 ---
-<div class="home">
-  <header class="hero">
-    <div class="hero-content">
-      <h1 class="pixel-text">{{ site.title | escape }}</h1>
-      <p class="subtitle">{{ site.description | escape }}</p>
-    </div>
-    <div class="hero-decoration">
-      <div class="pixel" v-for="n in 64" :key="n"></div>
-    </div>
+<div class="terminal">
+  <header class="console-header">
+    <h1 data-text="MONOCHROME_MUSINGS">MONOCHROME_MUSINGS</h1>
+    <p class="prompt">USER@BLOG:~$ <span class="cursor">█</span></p>
   </header>
 
-  <nav class="pixel-nav">
-    <a href="/" class="nav-link">⌂ HOME</a>
-    <a href="/about" class="nav-link">⍰ ABOUT</a>
-    <a href="/archive" class="nav-link">🗀 ARCHIVE</a>
-  </nav>
-
-  <div class="sort-options pixel-buttons">
-    <span class="sort-label">SORT MODE:</span>
-    <button onclick="sortPosts('date-desc')" class="pixel-button">NEWEST</button>
-    <button onclick="sortPosts('date-asc')" class="pixel-button">OLDEST</button>
-    <button onclick="sortPosts('title')" class="pixel-button">A-Z</button>
-  </div>
-
-  <div class="post-grid" id="postGrid">
+  <div class="post-archive">
     {% for post in site.posts %}
-      <a href="{{ post.url | relative_url }}" class="post-card">
-        <div class="post-card-inner">
-          <div class="post-card-front">
-            <h2 class="post-title">{{ post.title | escape }}</h2>
-            <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
-            <div class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 15 }}</div>
-          </div>
-          <div class="post-card-back">
-            <span class="read-more">READ →</span>
-          </div>
-        </div>
-      </a>
+    <div class="post-listing" onclick="togglePost('{{ post.id }}')">
+      <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      <span class="title">{{ post.title | upcase }}</span>
+      <span class="size">{% assign words = post.content | number_of_words %}{{ words | divided_by: 180 | plus: 1 }}MIN READ</span>
+    </div>
+    
+    <div id="{{ post.id }}" class="post-content hidden">
+      <div class="post-meta">
+        <span>POSTED: {{ post.date | date: "%Y-%m-%d @ %H:%M" }}</span>
+        <button onclick="event.stopPropagation(); togglePost('{{ post.id }}')">CLOSE [X]</button>
+      </div>
+      <div class="post-body">
+        {{ post.content }}
+      </div>
+    </div>
     {% endfor %}
   </div>
+
+  <footer class="status-bar">
+    <span>POSTS: {{ site.posts.size }}</span>
+    <span>LATEST: {{ site.posts.last.date | date: "%Y-%m-%d" }}</span>
+    <span>© {{ site.time | date: '%Y' }} {{ site.author.name | upcase }}</span>
+  </footer>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
-<script>
-// Pixel animation
-new Vue({
-  el: '.hero-decoration',
-  data: {
-    activePixels: []
-  },
-  created() {
-    setInterval(() => {
-      const randomPixel = Math.floor(Math.random() * 64) + 1;
-      this.activePixels.push(randomPixel);
-      setTimeout(() => {
-        this.activePixels = this.activePixels.filter(p => p !== randomPixel);
-      }, 1000);
-    }, 100);
-  }
-});
+<style>
+@import url('https://fonts.googleapis.com/css2?family={{ site.google_fonts }}&display=swap');
 
-// Sorting function with animation
-function sortPosts(method) {
-  const grid = document.getElementById('postGrid');
-  const posts = Array.from(grid.children);
-  
-  // Add shuffle animation
-  grid.classList.add('shuffling');
-  setTimeout(() => grid.classList.remove('shuffling'), 500);
-  
-  posts.sort((a, b) => {
-    const aDate = new Date(a.querySelector('.post-date').textContent);
-    const bDate = new Date(b.querySelector('.post-date').textContent);
-    const aTitle = a.querySelector('.post-title').textContent.toLowerCase();
-    const bTitle = b.querySelector('.post-title').textContent.toLowerCase();
-    
-    if (method === 'date-desc') return bDate - aDate;
-    if (method === 'date-asc') return aDate - bDate;
-    if (method === 'title') return aTitle.localeCompare(bTitle);
-    return 0;
-  });
-  
-  // Animate reordering
-  posts.forEach((post, index) => {
-    setTimeout(() => {
-      grid.appendChild(post);
-      post.classList.add('appear');
-      setTimeout(() => post.classList.remove('appear'), 300);
-    }, index * 50);
-  });
+:root {
+  --bg: {{ site.background }};
+  --text: {{ site.text_color }};
+  --accent: {{ site.accent_color }};
+  --glow: 0 0 10px rgba(255,255,255,0.8);
 }
 
-// Hover effects for cards
-document.querySelectorAll('.post-card').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    card.classList.add('hover');
-  });
-  card.addEventListener('mouseleave', () => {
-    card.classList.remove('hover');
-  });
-});
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pixelify Sans', monospace;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+}
+
+.terminal {
+  max-width: 900px;
+  margin: 0 auto;
+  border: 3px solid var(--accent);
+  box-shadow: var(--glow);
+}
+
+.console-header {
+  border-bottom: 2px dashed var(--accent);
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0;
+  text-shadow: var(--glow);
+  letter-spacing: 2px;
+}
+
+.prompt {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.cursor {
+  animation: blink 1s infinite;
+}
+
+.post-archive {
+  padding: 20px;
+}
+
+.post-listing {
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+  padding: 15px;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+
+.post-listing:hover {
+  background: #111;
+}
+
+.post-content {
+  padding: 20px;
+  border-left: 3px solid var(--accent);
+  margin: 10px 0 30px;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.post-meta button {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #111;
+  font-size: 0.8rem;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .post-listing {
+    grid-template-columns: 1fr;
+    grid-gap: 5px;
+  }
+  
+  .date, .size {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+}
+</style>
+
+<script>
+function togglePost(id) {
+  const post = document.getElementById(id);
+  post.classList.toggle('hidden');
+  
+  // Smooth scroll to expanded post
+  if (!post.classList.contains('hidden')) {
+    post.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// Typewriter effect for header
+const title = document.querySelector('h1[data-text]');
+const text = title.getAttribute('data-text');
+let index = 0;
+
+function typeWriter() {
+  if (index < text.length) {
+    title.textContent = text.substring(0, index+1).replace('_', ' ');
+    index++;
+    setTimeout(typeWriter, Math.random() * 200 + 50);
+  }
+}
+
+setTimeout(typeWriter, 1000);
 </script>
