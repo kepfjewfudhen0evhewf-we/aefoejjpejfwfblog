@@ -1,54 +1,27 @@
-# Site Settings
-title: "Monochrome Musings"
-description: "Thoughts in black and white"
-url: "https://yourusername.github.io"  # Replace with your GitHub username
-baseurl: ""  # Leave empty for user/organization sites
+# Site Configuration
+title: "MONOCHROME MUSINGS"
+description: "THOUGHTS IN NEGATIVE SPACE"
+url: "https://yourusername.github.io"
+baseurl: ""
 
-# Author Information
-author:
-  name: "Your Name"
-  email: "your@email.com"  # Optional
-  twitter: "@yourhandle"   # Optional
-
-# Technical Configuration
+# Design Settings
 theme: minima
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag  # Recommended for better SEO
-
-# Font Configuration
 google_fonts: "Pixelify+Sans:wght@400..700"
-font:
-  main: "'Pixelify Sans', sans-serif"
-  headings: "'Pixelify Sans', sans-serif"
+color_scheme: dark
+background: "#000000"
+text_color: "#ffffff"
+accent_color: "#cccccc"
 
-# Post Settings
+# Content Settings
 collections:
   posts:
-    output: true
-    sort_by: date
-    sort_direction: descending
-permalink: /:year/:month/:title/
-paginate: 5  # Posts per page (optional)
-paginate_path: /page:num/
+    output: false  # We'll handle display on index
+permalink: pretty
+excerpt_separator: "<!--more-->"
 
-# Performance Settings
-sass:
-  style: compressed  # Minifies CSS
+# Technical Settings
+plugins:
+  - jekyll-feed
 markdown: kramdown
 kramdown:
   syntax_highlighter: rouge
-  auto_ids: true
-  hard_wrap: false
-
-# Optional Features (uncomment to enable)
-# excerpt_separator: "<!--more-->"  # For custom post excerpts
-# future: false  # Hide posts with future dates
-# timezone: America/New_York  # Set your local timezone
-# google_analytics: UA-XXXXX-Y  # For Google Analytics
-
-# Custom Variables (for your design)
-design:
-  primary_color: "#000000"
-  secondary_color: "#ffffff"
-  accent_color: "#333333"
