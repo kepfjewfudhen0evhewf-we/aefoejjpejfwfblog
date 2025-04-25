@@ -1,7 +1,8 @@
 title: "Zres Blog"
 description: "Cybersec FR"
+url: "https://newgens.lol"
 baseurl: ""
-
+timezone: Europe/Paris
 
 theme: minima
 google_fonts: "Pixelify+Sans:wght@400..700"
@@ -9,17 +10,35 @@ color_scheme: dark
 background: "#000000"
 text_color: "#ffffff"
 accent_color: "#cccccc"
-
+version: "{% raw %}{{ site.time | date: '%Y%m%d%H%M' }}{% endraw %}"
 
 collections:
   posts:
-    output: false 
+    output: true
+    permalink: /:year/:month/:title/
+    sort_by: date
+    sort_direction: descending
+
 permalink: pretty
 excerpt_separator: "<!--more-->"
-
+future: true
 
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
 markdown: kramdown
 kramdown:
   syntax_highlighter: rouge
+  auto_ids: true
+  hard_wrap: false
+
+sass:
+  style: compressed
+gzip:
+  extensions:
+    - .html
+    - .css
+    - .js
+    - .json
