@@ -147,6 +147,36 @@
             transform: translate(3px, 3px);
         }
         
+        .search-container {
+            position: relative;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 12px 20px 12px 40px;
+            background: #111;
+            border: 2px solid var(--black);
+            color: var(--white);
+            font-family: inherit;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .search-bar:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--black);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
         .post-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -278,8 +308,40 @@
                 font-size: 2.5rem;
             }
             
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .pixel-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .sort-options {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .search-container {
+                width: 95%;
+            }
+            
+            .search-bar {
+                padding: 10px 15px 10px 35px;
+                font-size: 0.9rem;
+            }
+            
             .post-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .post-card {
+                height: 180px;
+            }
+            
+            .post-title {
+                font-size: 1.3rem;
             }
             
             .hero-decoration {
@@ -290,6 +352,22 @@
                 font-size: 0.5rem;
             }
         }
+        
+        @media (max-width: 480px) {
+            h1.pixel-text {
+                font-size: 2rem;
+            }
+            
+            .search-bar {
+                padding: 8px 12px 8px 30px;
+                font-size: 0.8rem;
+            }
+            
+            .pixel-button {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -297,7 +375,7 @@
     
     <footer class="ascii-footer">
         <div class="ascii-art">
-
+ 
  ▄███████▄     ▄████████    ▄████████ 
 ██▀     ▄██   ███    ███   ███    ███ 
       ▄███▀   ███    ███   ███    █▀  
@@ -309,6 +387,7 @@
               ███    ███              
 
         </div>
+        <div class="copyright">© {{ site.time | date: '%Y' }} {{ site.author.name }}</div>
     </footer>
 </body>
 </html>
