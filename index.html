@@ -1,3 +1,6 @@
+---
+layout: default
+---
 <div class="terminal">
   <header class="console-header">
     <h1 data-text="Newgens.lol_Blog">Newgens.lol Blog</h1>
@@ -175,6 +178,7 @@ h1 {
   50% { opacity: 0; }
 }
 
+
 @media (max-width: 768px) {
   .post-listing {
     grid-template-columns: 1fr;
@@ -199,9 +203,10 @@ function typeWriter() {
     index++;
     setTimeout(typeWriter, Math.random() * 200 + 50);
   } else {
-    title.textContent = "Newgens.lol Blog";
+    title.textContent = "Newgens.lol Blog"; 
   }
 }
+
 
 function togglePost(id) {
   const post = document.getElementById(id);
@@ -211,6 +216,7 @@ function togglePost(id) {
     post.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
+
 
 const searchInput = document.getElementById('searchInput');
 const postContainer = document.getElementById('postContainer');
@@ -231,7 +237,9 @@ searchInput.addEventListener('input', function() {
     }
   });
   
+  
   postCount.textContent = visibleCount;
+  
   
   const noResults = document.querySelector('.no-results');
   if (visibleCount === 0 && searchTerm.length > 0) {
@@ -245,6 +253,7 @@ searchInput.addEventListener('input', function() {
     noResults.remove();
   }
 });
+
 
 setTimeout(typeWriter, 1000);
 </script>
