@@ -1,0 +1,16 @@
+title: Monochrome Musings
+description: Thoughts in black and white
+theme: minima
+plugins:
+  - jekyll-feed
+
+# Custom variables
+author:
+  name: Your Name
+
+# Enable sorting
+collections:
+  posts:
+    output: true
+    sort_by: date
+    sort_direction: descending
