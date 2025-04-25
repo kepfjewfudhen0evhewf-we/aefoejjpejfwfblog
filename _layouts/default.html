@@ -12,6 +12,7 @@
             --white: #ffffff;
             --gray: #e0e0e0;
             --dark-gray: #333333;
+            --accent: #00ff00;
         }
         
         body {
@@ -219,12 +220,27 @@
             animation: pulse 1.5s infinite;
         }
         
-        footer {
-            margin-top: 80px;
-            padding: 20px 0;
-            border-top: 2px solid var(--black);
+        .ascii-footer {
+            font-family: 'Courier New', monospace;
             text-align: center;
-            font-size: 0.9rem;
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            border-top: 2px dashed var(--black);
+            line-height: 1.2;
+        }
+        
+        .ascii-art {
+            font-size: 0.6rem;
+            color: var(--accent);
+            margin: 0 auto;
+            white-space: pre;
+            filter: drop-shadow(0 0 2px var(--accent));
+        }
+        
+        .copyright {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            color: var(--dark-gray);
         }
         
         @keyframes underline {
@@ -269,14 +285,26 @@
             .hero-decoration {
                 display: none;
             }
+            
+            .ascii-art {
+                font-size: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
     {{ content }}
     
-    <footer>
-        <p>© {{ site.time | date: '%Y' }} {{ site.author.name }}.</p>
+    <footer class="ascii-footer">
+        <div class="ascii-art">
+   _____   _____   _____   _____  
+  / ____| |  __ \ |  __ \ |  __ \ 
+ | (___   | |__) || |__) || |  | |
+  \___ \  |  ___/ |  _  / | |  | |
+  ____) | | |     | | \ \ | |__| |
+ |_____/  |_|     |_|  \_\|_____/ 
+        </div>
+        <div class="copyright">© {{ site.time | date: '%Y' }} {{ site.author.name }}</div>
     </footer>
 </body>
 </html>
