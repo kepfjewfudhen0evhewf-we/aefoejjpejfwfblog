@@ -1,6 +1,3 @@
----
-layout: default
----
 <div class="terminal">
   <header class="console-header">
     <h1 data-text="Newgens.lol_Blog">Newgens.lol Blog</h1>
@@ -178,7 +175,6 @@ h1 {
   50% { opacity: 0; }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .post-listing {
     grid-template-columns: 1fr;
@@ -193,7 +189,6 @@ h1 {
 </style>
 
 <script>
-// Typewriter effect for header
 const title = document.querySelector('h1[data-text]');
 const text = title.getAttribute('data-text');
 let index = 0;
@@ -204,11 +199,10 @@ function typeWriter() {
     index++;
     setTimeout(typeWriter, Math.random() * 200 + 50);
   } else {
-    title.textContent = "Newgens.lol Blog"; // Ensure final text is correct
+    title.textContent = "Newgens.lol Blog";
   }
 }
 
-// Post expansion
 function togglePost(id) {
   const post = document.getElementById(id);
   post.classList.toggle('hidden');
@@ -218,7 +212,6 @@ function togglePost(id) {
   }
 }
 
-// Search functionality
 const searchInput = document.getElementById('searchInput');
 const postContainer = document.getElementById('postContainer');
 const postCount = document.getElementById('postCount');
@@ -238,10 +231,8 @@ searchInput.addEventListener('input', function() {
     }
   });
   
-  // Update post count
   postCount.textContent = visibleCount;
   
-  // Show no results message
   const noResults = document.querySelector('.no-results');
   if (visibleCount === 0 && searchTerm.length > 0) {
     if (!noResults) {
@@ -255,6 +246,5 @@ searchInput.addEventListener('input', function() {
   }
 });
 
-// Initialize
 setTimeout(typeWriter, 1000);
 </script>
